@@ -172,9 +172,18 @@ export default function DocumentsPage() {
       const action = makeActive ? "activate" : "deactivate";
       const response = await api.put(`/documents/${doc.id}/${action}`);
       if (response.success) {
-        await fetchDocuments();
-        setSuccessMessage(`Document ${makeActive ? "activated" : "deactivated"} successfully.`);
-      } else setError(response.message ?? "Failed to update document status.");
+        // ✅ Only update this one document in state — zero re-fetch, zero reload
+        setDocuments((prev) =>
+          prev.map((d) =>
+            d.id === doc.id ? { ...d, is_latest: makeActive } : d
+          )
+        );
+        setSuccessMessage(
+          `Document ${makeActive ? "activated" : "deactivated"} successfully.`
+        );
+      } else {
+        setError(response.message ?? "Failed to update document status.");
+      }
     } catch (err) {
       console.error(err);
       setError("Failed to update document status.");
@@ -182,7 +191,6 @@ export default function DocumentsPage() {
       setToggling(null);
     }
   };
-
   const handleDelete = async () => {
     if (!deleteTarget) return;
     setDeleting(deleteTarget.id);
@@ -217,7 +225,8 @@ export default function DocumentsPage() {
       route: "/documents",
       popover: {
         title: "Filter Documents",
-        description: "View all documents, only the latest versions, or outdated ones. Latest versions are used by the AI for answers.",
+        description:
+          "View all documents, only the latest versions, or outdated ones. Latest versions are used by the AI for answers.",
         side: "bottom" as const,
         align: "start" as const,
       },
@@ -227,7 +236,8 @@ export default function DocumentsPage() {
       route: "/documents",
       popover: {
         title: "Document Library",
-        description: "Browse and manage your uploaded documents. Click to preview, or use the actions to activate/deactivate or delete.",
+        description:
+          "Browse and manage your uploaded documents. Click to preview, or use the actions to activate/deactivate or delete.",
         side: "top" as const,
         align: "center" as const,
       },
@@ -236,7 +246,7 @@ export default function DocumentsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white">
-      <PageTour pageId="documents" steps={documentsTourSteps} runOnMount autoAdvanceOnTargetClick />
+      <PageTour pageId="documents" steps={documentsTourSteps} runOnMount />
       <AppNav />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -292,7 +302,9 @@ export default function DocumentsPage() {
         {filtered.length === 0 ? (
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-12 text-center">
             <FileText className="w-12 h-12 text-slate-400 dark:text-slate-500 mx-auto mb-4" />
-            <p className="text-lg font-medium text-slate-700 dark:text-slate-300">No documents found</p>
+            <p className="text-lg font-medium text-slate-700 dark:text-slate-300">
+              No documents found
+            </p>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
               {activeTab === "all"
                 ? "Upload a document to get started."
@@ -300,7 +312,10 @@ export default function DocumentsPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-tour="documents-content">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+            data-tour="documents-content"
+          >
             {filtered.map((doc) => {
               const config = getTypeConfig(doc.type);
               const Icon = config.icon;
@@ -331,7 +346,10 @@ export default function DocumentsPage() {
                         <Icon className="w-6 h-6" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="font-semibold text-slate-900 dark:text-white truncate" title={doc.name}>
+                        <p
+                          className="font-semibold text-slate-900 dark:text-white truncate"
+                          title={doc.name}
+                        >
                           {doc.name}
                         </p>
                         <p className="text-xs text-slate-500 dark:text-slate-400">
@@ -395,8 +413,18 @@ export default function DocumentsPage() {
                           ) : (
                             <ToggleLeft className="w-5 h-5 text-slate-400 flex-shrink-0" />
                           )}
-                          <span className={doc.is_latest ? "text-emerald-600 dark:text-emerald-400 font-medium" : "text-slate-500 dark:text-slate-400"}>
-                            {toggling === doc.id ? "Updating…" : doc.is_latest ? "Active" : "Inactive"}
+                          <span
+                            className={
+                              doc.is_latest
+                                ? "text-emerald-600 dark:text-emerald-400 font-medium"
+                                : "text-slate-500 dark:text-slate-400"
+                            }
+                          >
+                            {toggling === doc.id
+                              ? "Updating…"
+                              : doc.is_latest
+                              ? "Active"
+                              : "Inactive"}
                           </span>
                         </button>
                       </div>
@@ -414,7 +442,11 @@ export default function DocumentsPage() {
                           disabled={deleting === doc.id}
                           className="flex items-center gap-2 w-full text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg py-2 px-3 disabled:opacity-50"
                         >
-                          {deleting === doc.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                          {deleting === doc.id ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="w-4 h-4" />
+                          )}
                           Delete
                         </button>
                       </div>
@@ -427,10 +459,10 @@ export default function DocumentsPage() {
         )}
 
         <footer className="mt-8 flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
-          <span>Total: {filtered.length} document{filtered.length !== 1 ? "s" : ""}</span>
-          {activeTab === "all" && (
-            <span>Latest versions: {latestCount}</span>
-          )}
+          <span>
+            Total: {filtered.length} document{filtered.length !== 1 ? "s" : ""}
+          </span>
+          {activeTab === "all" && <span>Latest versions: {latestCount}</span>}
         </footer>
       </main>
 
@@ -448,7 +480,8 @@ export default function DocumentsPage() {
           <div className="bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-800 w-full max-w-sm p-6">
             <h2 className="text-lg font-semibold mb-2">Delete document?</h2>
             <p className="text-slate-600 dark:text-slate-400 text-sm mb-6">
-              &quot;{deleteTarget.name}&quot; will be removed from the list. This action cannot be undone.
+              &quot;{deleteTarget.name}&quot; will be removed from the list. This action
+              cannot be undone.
             </p>
             <div className="flex gap-2">
               <button
