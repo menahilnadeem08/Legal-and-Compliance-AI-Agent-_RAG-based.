@@ -185,9 +185,9 @@ function ForgotPasswordContent() {
   const currentIndex = steps.indexOf(step);
 
   return (
-    <div className="min-h-screen flex bg-slate-950">
+    <div className="min-h-screen flex bg-white dark:bg-slate-950">
       {/* ── Left decorative panel ── */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-blue-900 flex-col justify-between p-12">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-950 flex-col justify-between p-12">
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -203,16 +203,18 @@ function ForgotPasswordContent() {
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-blue-900" />
           </div>
-          <span className="text-white font-bold text-xl tracking-tight">Legal and Compliance Rag</span>
+          <span className="text-blue-900 dark:text-white font-bold text-xl tracking-tight">
+            Legal and Compliance Rag
+          </span>
         </div>
 
         <div className="relative z-10">
-          <h2 className="text-5xl font-bold text-white leading-tight mb-4">
+          <h2 className="text-5xl font-bold text-blue-900 dark:text-white leading-tight mb-4">
             Secure
             <br />
             recovery.
           </h2>
-          <p className="text-blue-200 text-lg leading-relaxed max-w-sm">
+          <p className="text-blue-700 dark:text-blue-200 text-lg leading-relaxed max-w-sm">
             Your password reset is protected with email verification.
           </p>
         </div>
@@ -226,15 +228,17 @@ function ForgotPasswordContent() {
                   currentIndex > i
                     ? "bg-emerald-500 border-emerald-500 text-white"
                     : currentIndex === i
-                    ? "bg-blue-700 border-blue-400 text-white"
-                    : "bg-transparent border-blue-700 text-blue-500"
+                    ? "bg-blue-600 dark:bg-blue-700 border-blue-400 dark:border-blue-400 text-white"
+                    : "bg-transparent border-blue-600 text-blue-600 dark:border-blue-700 dark:text-blue-500"
                 }`}
               >
                 {currentIndex > i ? <Check className="w-3 h-3" /> : i + 1}
               </div>
               <span
                 className={`text-sm transition-colors ${
-                  currentIndex >= i ? "text-blue-100" : "text-blue-600"
+                  currentIndex >= i
+                    ? "text-blue-700 dark:text-blue-100"
+                    : "text-blue-600 dark:text-blue-600"
                 }`}
               >
                 {s === "email" ? "Enter email" : s === "otp" ? "Verify code" : "Reset password"}
@@ -245,14 +249,16 @@ function ForgotPasswordContent() {
       </div>
 
       {/* ── Right form panel ── */}
-      <div className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-md">
+      <div className="flex-1 flex items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+        <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-8">
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-10 lg:hidden">
-            <div className="w-8 h-8 bg-blue-900 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-blue-600 dark:bg-blue-900 rounded-lg flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <span className="text-white font-bold text-xl tracking-tight">Legal and Compliance Rag</span>
+            <span className="text-slate-900 dark:text-white font-bold text-xl tracking-tight">
+              Legal and Compliance Rag
+            </span>
           </div>
 
           {/* Back button */}
@@ -264,7 +270,7 @@ function ForgotPasswordContent() {
                 else if (step === "reset") setStep("otp");
               }}
               disabled={loading}
-              className="flex items-center gap-1.5 text-gray-400 hover:text-gray-200 text-sm mb-8 transition-colors disabled:opacity-50 disabled:pointer-events-none"
+              className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-gray-400 dark:hover:text-gray-200 text-sm mb-8 transition-colors disabled:opacity-50 disabled:pointer-events-none"
             >
               <ArrowLeft className="w-4 h-4" />
               Back
@@ -272,22 +278,22 @@ function ForgotPasswordContent() {
           )}
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
               {stepTitles[step].title}
             </h1>
-            <p className="text-gray-400">{stepTitles[step].subtitle}</p>
+            <p className="text-slate-600 dark:text-gray-400">{stepTitles[step].subtitle}</p>
           </div>
 
           {/* ── Done state ── */}
           {step === "done" ? (
             <div className="text-center py-8 animate-[fadeIn_0.4s_ease]">
               <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+                <CheckCircle2 className="w-8 h-8 text-emerald-500 dark:text-emerald-400" />
               </div>
-              <p className="text-gray-400 mb-6">You can now sign in with your new password.</p>
+              <p className="text-slate-600 dark:text-gray-400 mb-6">You can now sign in with your new password.</p>
               <Link
                 href={loginHref}
-                className="inline-flex items-center gap-2 bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all group"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 dark:bg-blue-900 dark:hover:bg-blue-800 dark:active:bg-blue-950 text-white font-semibold py-3 px-6 rounded-xl transition-all group"
               >
                 Go to sign in
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -297,13 +303,13 @@ function ForgotPasswordContent() {
             <form onSubmit={proceed} className="space-y-5" noValidate>
               {/* Error alert */}
               {error && (
-                <div className="flex items-start gap-2.5 bg-red-950/40 border border-red-800/50 rounded-xl px-4 py-3 animate-[fadeIn_0.2s_ease]">
-                  <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-red-300 text-sm flex-1">{error}</p>
+                <div className="flex items-start gap-2.5 bg-red-100 dark:bg-red-950/40 border border-red-300 dark:border-red-800/50 rounded-xl px-4 py-3 animate-[fadeIn_0.2s_ease]">
+                  <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-red-700 dark:text-red-300 text-sm flex-1">{error}</p>
                   <button
                     type="button"
                     onClick={() => setError("")}
-                    className="text-red-500 hover:text-red-300 transition-colors"
+                    className="text-red-600 hover:text-red-500 dark:text-red-500 dark:hover:text-red-300 transition-colors"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -313,7 +319,7 @@ function ForgotPasswordContent() {
               {/* Step: Email */}
               {step === "email" && (
                 <div className="space-y-1.5">
-                  <label htmlFor="fp-email" className="text-sm font-medium text-gray-300">
+                  <label htmlFor="fp-email" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                     Email address
                   </label>
                   <div className="relative">
@@ -328,7 +334,7 @@ function ForgotPasswordContent() {
                       required
                       disabled={loading}
                       autoFocus
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-10 pr-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl pl-10 pr-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -338,7 +344,7 @@ function ForgotPasswordContent() {
               {step === "otp" && (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-300">
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
                       Enter 6-digit code
                     </label>
                     <div className="flex gap-2.5">
@@ -354,23 +360,23 @@ function ForgotPasswordContent() {
                           onKeyDown={(e) => handleOtpKeyDown(i, e)}
                           autoFocus={i === 0}
                           disabled={loading}
-                          className={`w-full aspect-square text-center text-xl font-bold bg-slate-900 border rounded-xl text-white focus:outline-none focus:ring-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                          className={`w-full aspect-square text-center text-xl font-bold bg-white dark:bg-slate-900 border rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                             digit
-                              ? "border-blue-500 focus:ring-blue-500/30 bg-blue-950/30"
-                              : "border-slate-700 focus:border-blue-500 focus:ring-blue-500/30"
+                              ? "border-blue-500 focus:ring-blue-500/30 bg-blue-50/70 dark:bg-blue-950/30"
+                              : "border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-blue-500/30"
                           }`}
                         />
                       ))}
                     </div>
                   </div>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-slate-600 dark:text-gray-500">
                     Didn't receive it?{" "}
                     <button
                       type="button"
                       onClick={handleResend}
                       disabled={loading}
-                      className="text-blue-400 hover:text-blue-300 transition-colors disabled:opacity-50"
+                      className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors disabled:opacity-50"
                     >
                       Resend code
                     </button>
@@ -415,7 +421,7 @@ function ForgotPasswordContent() {
                   loading ||
                   (step === "reset" && (!passwordsMatch || !isPasswordValid(password)))
                 }
-                className="w-full bg-blue-900 hover:bg-blue-800 active:bg-blue-950 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed group relative overflow-hidden"
+                className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 dark:bg-blue-900 dark:hover:bg-blue-800 dark:active:bg-blue-950 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed group relative overflow-hidden"
               >
                 {loading && (
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-shimmer" />

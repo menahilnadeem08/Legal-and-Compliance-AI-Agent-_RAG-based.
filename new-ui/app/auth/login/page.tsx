@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { Sparkles } from "lucide-react";
 import { getAuthToken, setAuth } from "@/app/utils/auth";
+import { friendlyAuthError } from "@/app/utils/userFacingErrors";
 
 function LoginContent() {
   const router = useRouter();
@@ -15,16 +16,25 @@ function LoginContent() {
   const [error, setError] = useState("");
 
   const urlError = useMemo(() => searchParams.get("error") || "", [searchParams]);
-  const isLocalLoginHint = urlError.includes("local login") || urlError.includes("original login");
+  const friendlyUrlError = useMemo(() => friendlyAuthError(urlError), [urlError]);
+  const isLocalLoginHint =
+    urlError === "OAuthAccountNotLinked" ||
+    urlError.toLowerCase().includes("local login") ||
+    urlError.toLowerCase().includes("original login");
+
+  useEffect(() => {
+    if (urlError) console.warn("[AUTH] Sign-in error from URL:", urlError);
+  }, [urlError]);
 
   useEffect(() => {
     if (status === "loading") return;
-    const sessionAccessToken = (session?.user as any)?.accessToken;
+    const sessionUser = session?.user as unknown as { accessToken?: string; refreshToken?: string } | undefined;
+    const sessionAccessToken = sessionUser?.accessToken;
     if (session?.user && sessionAccessToken) {
       setAuth(
         sessionAccessToken,
         { ...session.user, role: "admin" },
-        (session.user as any)?.refreshToken
+        sessionUser?.refreshToken
       );
       router.replace("/dashboard");
       return;
@@ -76,10 +86,10 @@ function LoginContent() {
             Sign in with Google or use admin email/password below.
           </p>
 
-          {(error || urlError) && (
+          {(error || friendlyUrlError) && (
             <div className="mb-4 space-y-1">
               <p className="text-sm text-red-600 dark:text-red-400 text-center">
-                {error || decodeURIComponent(urlError)}
+                {error || friendlyUrlError}
               </p>
               {isLocalLoginHint && (
                 <p className="text-sm text-slate-600 dark:text-slate-400 text-center">
