@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useTheme } from "@/app/theme-provider";
+import { ThemeToggleButton } from "./ThemeToggleButton";
 import {
   Gavel,
   LayoutDashboard,
@@ -13,8 +14,6 @@ import {
   FileText,
   UserPlus,
   FolderTree,
-  Moon,
-  Sun,
   LogOut,
   User,
 } from "lucide-react";
@@ -32,7 +31,8 @@ const navLinks: { href: string; label: string; icon: typeof LayoutDashboard; adm
 
 export function AppNav() {
   const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
+  // Keep ThemeProvider mounted at app root; theme state lives in theme-provider.
+  const { mounted } = useTheme();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -89,18 +89,7 @@ export function AppNav() {
           </div>
 
           <div className="flex items-center gap-2 flex-shrink-0">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="w-5 h-5" />
-              ) : (
-                <Moon className="w-5 h-5" />
-              )}
-            </button>
+            {mounted && <ThemeToggleButton />}
             <Link
               href="/profile"
               className={`p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 ${

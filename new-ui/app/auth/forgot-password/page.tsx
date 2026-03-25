@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { PasswordInput } from "@/app/components/PasswordInput";
 import { isPasswordValid } from "@/app/utils/passwordValidation";
 import { api } from "@/app/utils/apiClient";
+import { ThemeToggleButton } from "@/app/components/ThemeToggleButton";
 
 type Step = "email" | "otp" | "reset" | "done";
 
@@ -185,7 +186,8 @@ function ForgotPasswordContent() {
   const currentIndex = steps.indexOf(step);
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-slate-950">
+    <div className="min-h-screen flex bg-white dark:bg-slate-950 relative">
+      <ThemeToggleButton className="absolute top-4 right-4 z-50" />
       {/* ── Left decorative panel ── */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-950 flex-col justify-between p-12">
         <div

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, Sparkles, Mail, CheckCircle2, AlertCircle, X, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { setAuth } from "@/app/utils/auth";
+import { ThemeToggleButton } from "@/app/components/ThemeToggleButton";
 
 const RESEND_COOLDOWN = 30;
 
@@ -114,9 +115,10 @@ export default function OtpPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-950">
+    <div className="min-h-screen flex bg-white dark:bg-slate-950 relative">
+      <ThemeToggleButton className="absolute top-4 right-4 z-50" />
       {/* ── Left decorative panel ── */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-blue-900 flex-col justify-between p-12">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-950 flex-col justify-between p-12">
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -132,44 +134,44 @@ export default function OtpPage() {
           <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-blue-900" />
           </div>
-          <span className="text-white font-bold text-xl tracking-tight">Legal and Compliance Rag</span>
+          <span className="text-blue-900 dark:text-white font-bold text-xl tracking-tight">Legal and Compliance Rag</span>
         </div>
 
         <div className="relative z-10">
           <div className="w-16 h-16 bg-blue-800/60 border border-blue-600/40 rounded-2xl flex items-center justify-center mb-6">
             <Mail className="w-8 h-8 text-blue-200" />
           </div>
-          <h2 className="text-5xl font-bold text-white leading-tight mb-4">
+          <h2 className="text-5xl font-bold text-blue-900 dark:text-white leading-tight mb-4">
             Almost
             <br />
             there.
           </h2>
-          <p className="text-blue-200 text-lg leading-relaxed max-w-sm">
+          <p className="text-blue-700 dark:text-blue-200 text-lg leading-relaxed max-w-sm">
             One last step — verify your email to activate your account and get started.
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-2 text-blue-300 text-sm">
+        <div className="relative z-10 flex items-center gap-2 text-blue-600 dark:text-blue-300 text-sm">
           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
           Your account is ready to activate
         </div>
       </div>
 
       {/* ── Right form panel ── */}
-      <div className="flex-1 flex items-center justify-center p-6">
-        <div className="w-full max-w-md">
+      <div className="flex-1 flex items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+        <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-8">
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-10 lg:hidden">
-            <div className="w-8 h-8 bg-blue-900 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-blue-600 dark:bg-blue-900 rounded-lg flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <span className="text-white font-bold text-xl tracking-tight">Legal and Compliance Rag</span>
+            <span className="text-slate-900 dark:text-white font-bold text-xl tracking-tight">Legal and Compliance Rag</span>
           </div>
 
           {!verified && (
             <Link
               href="/auth/admin/signup"
-              className="flex items-center gap-1.5 text-gray-400 hover:text-gray-200 text-sm mb-8 transition-colors w-fit"
+              className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 dark:text-gray-400 dark:hover:text-gray-200 text-sm mb-8 transition-colors w-fit"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to register
@@ -180,11 +182,11 @@ export default function OtpPage() {
           {verified ? (
             <div className="text-center py-12 animate-[fadeIn_0.4s_ease]">
               <div className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-5">
-                <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+                <CheckCircle2 className="w-10 h-10 text-emerald-500 dark:text-emerald-400" />
               </div>
-              <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Verified!</h1>
-              <p className="text-gray-400 mb-1">Your email has been confirmed.</p>
-              <p className="text-gray-500 text-sm">Redirecting you to sign in...</p>
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">Verified!</h1>
+              <p className="text-slate-600 dark:text-gray-400 mb-1">Your email has been confirmed.</p>
+              <p className="text-slate-500 dark:text-gray-500 text-sm">Redirecting you to sign in...</p>
               <div className="mt-6 flex justify-center">
                 <div className="w-6 h-6 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
               </div>
@@ -192,10 +194,10 @@ export default function OtpPage() {
           ) : (
             <>
               <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
                   Verify your email
                 </h1>
-                <p className="text-gray-400">
+                <p className="text-slate-600 dark:text-gray-400">
                   Enter the 6-digit code we sent to your email address.
                 </p>
               </div>
@@ -206,7 +208,7 @@ export default function OtpPage() {
                   <div
                     key={i}
                     className={`h-0.5 flex-1 rounded-full transition-all duration-300 ${
-                      i < filled ? "bg-blue-500" : "bg-slate-700"
+                      i < filled ? "bg-blue-600 dark:bg-blue-500" : "bg-slate-200 dark:bg-slate-700"
                     }`}
                   />
                 ))}
@@ -215,13 +217,13 @@ export default function OtpPage() {
               <div className="space-y-6">
                 {/* Error alert */}
                 {error && (
-                  <div className="flex items-start gap-2.5 bg-red-950/40 border border-red-800/50 rounded-xl px-4 py-3 animate-[fadeIn_0.2s_ease]">
-                    <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                    <p className="text-red-300 text-sm flex-1">{error}</p>
+                  <div className="flex items-start gap-2.5 bg-red-100 dark:bg-red-950/40 border border-red-300 dark:border-red-800/50 rounded-xl px-4 py-3 animate-[fadeIn_0.2s_ease]">
+                    <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-red-700 dark:text-red-300 text-sm flex-1">{error}</p>
                     <button
                       type="button"
                       onClick={() => setError("")}
-                      className="text-red-500 hover:text-red-300 transition-colors"
+                      className="text-red-600 hover:text-red-500 dark:text-red-500 dark:hover:text-red-300 transition-colors"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -245,15 +247,15 @@ export default function OtpPage() {
                         autoFocus={i === 0}
                         disabled={loading}
                         aria-label={`Digit ${i + 1}`}
-                        className={`w-full aspect-square text-center text-2xl font-bold bg-slate-900 border rounded-xl text-white focus:outline-none focus:ring-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                        className={`w-full aspect-square text-center text-2xl font-bold bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:ring-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                           digit
-                            ? "border-blue-500 focus:ring-blue-500/30 bg-blue-950/30"
-                            : "border-slate-700 focus:border-blue-500 focus:ring-blue-500/30"
+                            ? "border-blue-500 focus:border-blue-500 focus:ring-blue-500/30 bg-blue-50/70 dark:bg-blue-950/30"
+                            : "focus:border-blue-500 focus:ring-blue-500/30"
                         }`}
                       />
                     ))}
                   </div>
-                  <p className="text-xs text-gray-600 mt-2.5 text-center">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-2.5 text-center">
                     You can also paste the code directly
                   </p>
                 </div>
@@ -262,7 +264,7 @@ export default function OtpPage() {
                 <button
                   onClick={() => handleVerify()}
                   disabled={loading || filled < 6}
-                  className="w-full bg-blue-900 hover:bg-blue-800 active:bg-blue-950 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed relative overflow-hidden"
+                  className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 dark:bg-blue-900 dark:hover:bg-blue-800 dark:active:bg-blue-950 text-white font-semibold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed relative overflow-hidden"
                 >
                   {loading && (
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-shimmer" />
@@ -280,9 +282,9 @@ export default function OtpPage() {
                 {/* Resend */}
                 <div className="text-center">
                   {resendCountdown > 0 ? (
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-slate-500 dark:text-gray-500">
                       Resend code in{" "}
-                      <span className="text-gray-400 font-medium tabular-nums">
+                      <span className="text-slate-400 dark:text-gray-400 font-medium tabular-nums">
                         0:{resendCountdown.toString().padStart(2, "0")}
                       </span>
                     </p>
@@ -290,10 +292,10 @@ export default function OtpPage() {
                     <button
                       onClick={handleResend}
                       disabled={resendLoading}
-                      className="text-sm text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1.5 mx-auto disabled:opacity-50"
+                      className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors flex items-center gap-1.5 mx-auto disabled:opacity-50"
                     >
                       {resendLoading ? (
-                        <div className="w-3.5 h-3.5 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin" />
+                        <div className="w-3.5 h-3.5 border-2 border-blue-600/30 border-t-blue-600 dark:border-blue-400/30 dark:border-t-blue-400 rounded-full animate-spin" />
                       ) : (
                         <RefreshCw className="w-3.5 h-3.5" />
                       )}

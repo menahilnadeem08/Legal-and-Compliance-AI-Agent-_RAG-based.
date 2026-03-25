@@ -17,6 +17,7 @@ import { api } from "../../../utils/apiClient";
 import { mapFieldErrors } from "../../../utils/formErrors";
 import { PasswordInput } from "../../../components/PasswordInput";
 import { isPasswordValid } from "../../../utils/passwordValidation";
+import { ThemeToggleButton } from "@/app/components/ThemeToggleButton";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -200,7 +201,8 @@ export default function AdminSignupPage() {
 
   if (step === "otp") {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+      <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 relative">
+        <ThemeToggleButton className="absolute top-4 right-4 z-50" />
         <div className="w-full max-w-md">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-8">
             <div className="flex items-center justify-center gap-2 mb-6">
@@ -284,7 +286,8 @@ export default function AdminSignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 relative">
+      <ThemeToggleButton className="absolute top-4 right-4 z-50" />
       <div className="w-full max-w-md">
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-8">
           <div className="flex items-center justify-center gap-2 mb-6">

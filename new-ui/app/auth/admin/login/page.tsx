@@ -8,6 +8,7 @@ import { PasswordInput } from "../../../components/PasswordInput";
 import { toast } from "sonner";
 import { setAuth, getAuthToken } from "../../../utils/auth";
 import { api } from "../../../utils/apiClient";
+import { ThemeToggleButton } from "@/app/components/ThemeToggleButton";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -73,7 +74,8 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-white dark:bg-slate-950">
+    <div className="min-h-screen flex bg-white dark:bg-slate-950 relative">
+      <ThemeToggleButton className="absolute top-4 right-4 z-50" />
       {/* Left decorative panel — same layout as employee login */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-950 flex-col justify-between p-12">
         <div
